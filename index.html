@@ -1,36 +1,34 @@
 <!DOCTYPE html>
-<html lang="tr" class="dark scroll-smooth">
+<html lang="tr" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galileo Galilei - Modern Fiziğin Babası</title>
+    <title>Galileo Galilei - 9/A Fizik Projesi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.min.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        space: {
-                            900: '#030712',
-                            800: '#0B1120',
-                            700: '#151D33',
-                        },
-                        amber: {
-                            gold: '#F59E0B',
-                            glow: '#D97706',
-                        },
-                        cyan: {
-                            glow: '#06B6D4',
-                        }
-                    },
                     fontFamily: {
-                        cinzel: ['Cinzel', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Space Grotesk', 'sans-serif']
+                    },
+                    colors: {
+                        cosmic: {
+                            950: '#02040a',
+                            900: '#080d1a',
+                            800: '#0f172a',
+                            700: '#1e293b'
+                        },
+                        neon: {
+                            cyan: '#00f2fe',
+                            amber: '#ffb703',
+                            purple: '#7000ff'
+                        }
                     }
                 }
             }
@@ -38,49 +36,56 @@
     </script>
     <style>
         body {
-            background-color: #030712;
-            color: #F3F4F6;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #02040a;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
         }
-        .glass-panel {
+
+        .glass {
             background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
+
         .glass-card {
-            background: rgba(30, 41, 59, 0.4);
+            background: rgba(15, 23, 42, 0.4);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(245, 158, 11, 0.15);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         .glass-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(245, 158, 11, 0.5);
-            box-shadow: 0 12px 30px -10px rgba(245, 158, 11, 0.25);
+            border-color: rgba(0, 242, 254, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px rgba(0, 242, 254, 0.15);
         }
-        .gold-gradient-text {
-            background: linear-gradient(135deg, #FFF 0%, #F59E0B 50%, #B45309 100%);
+
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #ffffff 0%, #00f2fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        .cyan-glow-text {
-            background: linear-gradient(135deg, #FFFFFF 0%, #38BDF8 50%, #0284C7 100%);
+
+        .text-gradient-amber {
+            background: linear-gradient(135deg, #ffffff 0%, #ffb703 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .reveal {
             opacity: 0;
-            transform: translateY(35px);
-            transition: all 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(24px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
-        canvas#starfield {
+
+        canvas.star-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -89,46 +94,61 @@
             pointer-events: none;
             z-index: 0;
         }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+
+        input[type=range] {
+            accent-color: #00f2fe;
         }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #030712;
+
+        .custom-scroll::-webkit-scrollbar {
+            width: 8px;
         }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #F59E0B;
+
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #02040a;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #1e293b;
             border-radius: 4px;
+        }
+
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+            background: #00f2fe;
         }
     </style>
 </head>
-<body class="custom-scrollbar selection:bg-amber-500 selection:text-black">
+<body class="custom-scroll selection:bg-neon-cyan selection:text-black">
 
-    <canvas id="starfield"></canvas>
+    <canvas id="starfield" class="star-bg"></canvas>
 
-    <div class="fixed top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
-    <div class="fixed bottom-10 right-10 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-[160px] pointer-events-none z-0"></div>
+    <div class="fixed top-1/4 -left-32 w-96 h-96 bg-neon-purple/10 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="fixed bottom-1/4 -right-32 w-96 h-96 bg-neon-cyan/10 rounded-full blur-[140px] pointer-events-none"></div>
 
-    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-4 px-6 md:px-12" id="navbar">
-        <div class="max-w-7xl mx-auto flex justify-between items-center glass-panel rounded-2xl px-6 py-3">
-            <a href="#hero" class="flex items-center gap-3 group" onclick="playAudio('click')">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-black font-bold font-cinzel text-xl shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
+    <header class="fixed top-0 left-0 w-full z-50 py-4 px-4 sm:px-8 transition-all duration-300" id="navbar">
+        <div class="max-w-6xl mx-auto glass rounded-2xl px-5 py-3 flex justify-between items-center">
+            <a href="#hero" class="flex items-center gap-3 group" onclick="snd('nav')">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-neon-cyan to-neon-purple flex items-center justify-center font-heading font-bold text-black text-lg group-hover:scale-105 transition-transform">
                     G
                 </div>
-                <span class="font-cinzel text-lg tracking-wider font-bold text-white group-hover:text-amber-400 transition-colors">GALILEO</span>
+                <div class="flex flex-col">
+                    <span class="font-heading font-bold text-white text-base tracking-wide group-hover:text-neon-cyan transition-colors">Galileo Galilei</span>
+                    <span class="text-[10px] text-gray-400 font-mono">9. Sınıf Fizik Ödevi</span>
+                </div>
             </a>
 
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#about" class="text-gray-300 hover:text-amber-400 transition-colors" onclick="playAudio('hover')">Hayatı</a>
-                <a href="#contributions" class="text-gray-300 hover:text-amber-400 transition-colors" onclick="playAudio('hover')">Keşifleri</a>
-                <a href="#telescope-sim" class="text-gray-300 hover:text-amber-400 transition-colors" onclick="playAudio('hover')">Teleskop Simülatörü</a>
-                <a href="#gallery" class="text-gray-300 hover:text-amber-400 transition-colors" onclick="playAudio('hover')">Galeri</a>
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <a href="#about" class="text-gray-300 hover:text-neon-cyan transition-colors" onclick="snd('hover')">Hayatı</a>
+                <a href="#discoveries" class="text-gray-300 hover:text-neon-cyan transition-colors" onclick="snd('hover')">Keşifleri</a>
+                <a href="#simulators" class="text-gray-300 hover:text-neon-cyan transition-colors" onclick="snd('hover')">Simülatörler</a>
+                <a href="#gallery" class="text-gray-300 hover:text-neon-cyan transition-colors" onclick="snd('hover')">Görseller</a>
             </nav>
 
-            <div class="flex items-center gap-4">
-                <button id="soundToggle" onclick="toggleAudio()" class="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-gray-300 hover:text-amber-400 hover:border-amber-500/50 transition-all bg-white/5" title="Ses Aç/Kapat">
-                    <i class="fas fa-volume-up text-sm" id="soundIcon"></i>
+            <div class="flex items-center gap-3">
+                <button id="audioBtn" onclick="toggleAudio()" class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-neon-cyan hover:border-neon-cyan/40 transition-all">
+                    <svg id="audioIconOff" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path></svg>
+                    <svg id="audioIconOn" class="w-4 h-4 hidden text-neon-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
                 </button>
-                <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-xs uppercase tracking-widest font-semibold text-black bg-amber-500 hover:bg-amber-400 rounded-xl transition-all shadow-lg shadow-amber-500/25 active:scale-95" onclick="playAudio('click')">
+                <a href="#contact" onclick="snd('click')" class="px-4 py-2 rounded-xl text-xs font-semibold uppercase tracking-wider bg-neon-cyan text-black hover:bg-cyan-300 transition-all shadow-lg shadow-neon-cyan/20">
                     İletişim
                 </a>
             </div>
@@ -136,480 +156,677 @@
     </header>
 
     <main class="relative z-10">
-        <section id="hero" class="min-h-screen flex items-center justify-center relative pt-24 pb-12 px-6">
-            <div class="max-w-5xl mx-auto text-center space-y-8">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs tracking-widest uppercase font-semibold animate-pulse">
-                    <i class="fas fa-star text-xs"></i> 9. Sınıf Fizik Araştırma Ödevi
+
+        <section id="hero" class="min-h-screen flex items-center justify-center pt-24 pb-16 px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto text-center space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neon-cyan/30 bg-neon-cyan/10 text-neon-cyan text-xs font-medium font-mono">
+                    <span class="w-2 h-2 rounded-full bg-neon-cyan animate-ping"></span>
+                    Fizik Dersi Dönem Ödevi Projesi
                 </div>
 
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-black font-cinzel tracking-tight gold-gradient-text leading-tight">
-                    GALİLEO GALİLEİ
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-bold font-heading tracking-tight text-gradient-cyan leading-tight">
+                    Galileo Galilei ve Bilimsel Devrim
                 </h1>
 
-                <p class="text-lg md:text-2xl text-gray-300 font-light max-w-3xl mx-auto leading-relaxed">
-                    "Ve yine de dönüyor." — Modern gözlemsel astronominin, fiziğin ve bilimsel yöntemin öncüsü.
+                <p class="text-base sm:text-lg text-gray-300 max-w-2xl mx-auto font-normal leading-relaxed">
+                    Selamlar! Fizik hocamızın verdiği araştırma ödevi için Galileo'nun hayatını, teleskopla yaptığı uzay keşiflerini ve serbest düşme deneylerini bu etkileşimli sitede topladım.
                 </p>
 
-                <div class="pt-6 flex flex-wrap justify-center gap-4">
-                    <a href="#about" onclick="playAudio('click')" class="px-8 py-4 rounded-xl font-bold text-black bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 shadow-xl shadow-amber-500/20 transition-all transform hover:-translate-y-1 flex items-center gap-3">
-                        <i class="fas fa-book-open"></i> Hayatını İncele
+                <div class="pt-4 flex flex-wrap justify-center gap-4">
+                    <a href="#simulators" onclick="snd('click')" class="px-6 py-3.5 rounded-xl font-medium text-sm text-black bg-neon-cyan hover:bg-cyan-300 transition-all flex items-center gap-2 shadow-xl shadow-neon-cyan/20">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        Teleskop Simülatörünü Aç
                     </a>
-                    <a href="#telescope-sim" onclick="playAudio('click')" class="px-8 py-4 rounded-xl font-bold text-white border border-white/20 hover:border-amber-500/50 bg-white/5 hover:bg-white/10 transition-all transform hover:-translate-y-1 flex items-center gap-3">
-                        <i class="fas fa-telescope text-amber-400"></i> Teleskoptan Bak
-                    </a>
-                </div>
-
-                <div class="pt-16 flex justify-center">
-                    <a href="#about" class="text-gray-500 hover:text-amber-400 transition-colors animate-bounce">
-                        <i class="fas fa-chevron-down text-2xl"></i>
+                    <a href="#about" onclick="snd('click')" class="px-6 py-3.5 rounded-xl font-medium text-sm text-white bg-white/5 border border-white/10 hover:bg-white/10 transition-all flex items-center gap-2">
+                        Hayatını Oku
                     </a>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="py-24 px-6 md:px-12 max-w-7xl mx-auto reveal">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div class="lg:col-span-5 relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-amber-500 to-cyan-500 rounded-3xl blur opacity-30 group-hover:opacity-75 transition duration-1000"></div>
-                    <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-space-800">
-                        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=1000&auto=format&fit=crop" 
-                             alt="Galileo Galilei Portresi" 
-                             class="w-full h-[500px] object-cover object-center grayscale hover:grayscale-0 transition-all duration-700 transform group-hover:scale-105"
-                             onerror="this.src='https://placehold.co/600x800/0B1120/F59E0B?text=Galileo+Galilei'">
-                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-space-900 via-space-900/80 to-transparent">
-                            <h3 class="font-cinzel text-xl font-bold text-amber-400">Galileo Galilei</h3>
-                            <p class="text-xs text-gray-400">1564 – 1642 | Pisa, İtalya</p>
+        <section id="about" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto reveal">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative group w-full max-w-sm">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-neon-cyan to-neon-purple rounded-3xl blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                        <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-cosmic-900">
+                            <img src="Portrait_of_Galileo_Galilei.png" 
+                                 alt="Galileo Galilei Portresi" 
+                                 class="w-full h-auto max-h-[460px] object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1578632767115-351597cf2477?q=80&w=800&auto=format&fit=crop';">
+                            <div class="p-4 bg-cosmic-950/80 backdrop-blur-md border-t border-white/10 text-center">
+                                <span class="font-heading font-semibold text-white text-base">Galileo Galilei</span>
+                                <p class="text-xs text-neon-amber font-mono mt-0.5">1564 - 1642 | Pisa, İtalya</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="lg:col-span-7 space-y-8">
+                <div class="lg:col-span-7 space-y-6">
                     <div>
-                        <span class="text-amber-400 text-sm font-semibold tracking-widest uppercase font-cinzel">BİYOGRAFİ</span>
-                        <h2 class="text-3xl md:text-5xl font-bold font-cinzel text-white mt-2">BİLİM ADAMININ HAYATI</h2>
+                        <span class="text-neon-cyan font-mono text-xs uppercase tracking-widest">Ödev Şartı: Biyografi</span>
+                        <h2 class="text-3xl font-bold font-heading text-white mt-1">Galileo Galilei Kimdir?</h2>
                     </div>
 
-                    <div class="glass-panel rounded-2xl p-8 space-y-4 text-gray-300 leading-relaxed text-base border-l-4 border-amber-500">
-                        <p class="hover:text-white transition-colors">1. Galileo Galilei, 15 Şubat 1564 tarihinde İtalya'nın Pisa kentinde dünyaya geldi.</p>
-                        <p class="hover:text-white transition-colors">2. Gençlik yıllarında babasının isteğiyle Pisa Üniversitesi'nde tıp eğitimine başlasa da matematiğe ve fiziğe olan derin ilgisi nedeniyle yönünü tamamen bu alana çevirdi.</p>
-                        <p class="hover:text-white transition-colors">3. Hollanda'da icat edilen ilk dürbün tasarımlarından ilham alarak gökyüzünü incelemek amacıyla kendi yüksek büyütmeli teleskopunu geliştirdi.</p>
-                        <p class="hover:text-white transition-colors">4. Teleskobuyla yaptığı gözlemlerde Jüpiter’in dört büyük uydusunu, Ay’ın girintili çıkıntılı yüzeyini ve Venüs’ün evrelerini keşfederek astronomide çığır açtı.</p>
-                        <p class="hover:text-white transition-colors">5. Elde ettiği somut bulgularla Kopernik’in "Güneş Merkezli Evren Kuramını" güçlü bir şekilde savundu.</p>
-                        <p class="hover:text-white transition-colors">6. Bu radikal fikirleri nedeniyle Katolik Kilisesi ve Engizisyon Mahkemesi ile büyük fikir ayrılıkları ve çatışmalar yaşadı.</p>
-                        <p class="hover:text-white transition-colors">7. 1633 yılında mahkeme kararıyla görüşlerini geri çekmeye zorlandı ve ömrünün son yıllarını ev hapsinde geçirmek zorunda kaldı.</p>
-                        <p class="hover:text-white transition-colors">8. Bilimsel çalışmalarından asla taviz vermeyen Galileo, 8 Ocak 1642’de hayata gözlerini yumdu ve geride modern fiziğin temellerini bıraktı.</p>
+                    <div class="glass-card rounded-2xl p-6 space-y-4 text-gray-300 text-sm leading-relaxed">
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            Galileo Galilei, 15 Şubat 1564 tarihinde İtalya'nın Pisa şehrinde dünyaya geldi.
+                        </p>
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            İlk olarak babasının isteği üzerine tıp okumak için Pisa Üniversitesi'ne kaydoldu fakat matematiğe olan ilgisi ağır basınca alan değiştirdi.
+                        </p>
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            Hollanda'da icat edilen ilk teleskop tasarımlarını duyduğunda, kendi merceklerini zımparalayarak gökyüzünü 30 kat büyüten ilk astronomik teleskobu yaptı.
+                        </p>
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            Teleskopuyla Jüpiter'in etrafında dönen 4 büyük uyduyu, Ay'ın yüzeyindeki kraterleri ve Güneş lekelerini keşfetti.
+                        </p>
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            Yaptığı bu gözlemlerle Dünya'nın evrenin merkezi olmadığını ve Güneş'in etrafında döndüğünü açıkça savundu.
+                        </p>
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            Fizik alanında Pisa Kulesi'nden ağırlıklar atarak havanın sürtünmesi olmadığında tüm cisimlerin aynı hızda düşeceğini ispatladı.
+                        </p>
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            Güneş merkezli evren fikrini savunduğu için Engizisyon Mahkemesi tarafından yargılandı ve hayatının son yıllarını ev hapsinde geçirmek zorunda kaldı.
+                        </p>
+                        <p class="border-l-2 border-neon-cyan pl-3">
+                            8 Ocak 1642'de ev hapsindeyken vefat etti ama deneysel fizik yöntemleriyle modern bilimin babası unvanını kazandı.
+                        </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contributions" class="py-24 px-6 md:px-12 max-w-7xl mx-auto reveal">
-            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                <span class="text-cyan-400 text-sm font-semibold tracking-widest uppercase font-cinzel">BİLİME KATKILARI</span>
-                <h2 class="text-3xl md:text-5xl font-bold font-cinzel text-white">YAPTIĞI EN ÖNEMLİ ÇALIŞMALAR</h2>
-                <p class="text-gray-400">Deney ve gözleme dayalı bilim anlayışıyla evreni kavrayışımızı kökten değiştiren buluşlar.</p>
+        <section id="discoveries" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto reveal">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-neon-amber font-mono text-xs uppercase tracking-widest">Bilime Kattığı Şeyler</span>
+                <h2 class="text-3xl font-bold font-heading text-white mt-1">En Önemli Çalışmaları</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass-card rounded-2xl p-8 space-y-4 flex flex-col justify-between" onclick="playAudio('hover')">
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-2xl mb-6">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold font-cinzel text-white">Gelişmiş Astronomik Teleskop</h3>
-                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
-                            Mevcut ilkel mercek sistemlerini geliştirerek gökyüzünü 30 kat büyütmeyle inceleyen ilk astronomik teleskobu imal etti ve gözlemsel astronomiyi başlattı.
-                        </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="glass-card rounded-2xl p-6 space-y-3" onclick="snd('hover')">
+                    <div class="w-10 h-10 rounded-xl bg-neon-cyan/10 border border-neon-cyan/20 flex items-center justify-center text-neon-cyan text-lg font-bold">
+                        01
                     </div>
-                    <div class="pt-4 border-t border-white/5 text-xs text-amber-400 uppercase font-semibold tracking-wider">
-                        Astronomik Devrim
-                    </div>
+                    <h3 class="text-lg font-bold font-heading text-white">Gökbilimsel Teleskop</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Sıradan dürbünleri geliştirerek uzayı inceleyen ilk kişi oldu. Bu sayede gökbilimde deney dönemi başladı.
+                    </p>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8 space-y-4 flex flex-col justify-between" onclick="playAudio('hover')">
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 text-2xl mb-6">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold font-cinzel text-white">Jüpiter'in Uydu Keşfi</h3>
-                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
-                            Io, Europa, Ganymede ve Callisto uydularını keşfederek, evrendeki her şeyin sadece Dünya etrafında dönmediğini kanıtladı.
-                        </p>
+                <div class="glass-card rounded-2xl p-6 space-y-3" onclick="snd('hover')">
+                    <div class="w-10 h-10 rounded-xl bg-neon-amber/10 border border-neon-amber/20 flex items-center justify-center text-neon-amber text-lg font-bold">
+                        02
                     </div>
-                    <div class="pt-4 border-t border-white/5 text-xs text-cyan-400 uppercase font-semibold tracking-wider">
-                        Galileo Uyduları
-                    </div>
+                    <h3 class="text-lg font-bold font-heading text-white">Jüpiter'in Uyduları</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Io, Europa, Ganymede ve Callisto'yu keşfederek her şeyin Dünya etrafında dönmediğini ispatladı.
+                    </p>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8 space-y-4 flex flex-col justify-between" onclick="playAudio('hover')">
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 text-2xl mb-6">
-                            <i class="fas fa-sun"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold font-cinzel text-white">Güneş Merkezli Evren</h3>
-                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
-                            Venüs'ün evrelerini ve Güneş lekelerini gözlemleyerek Kopernik'in Güneş merkezli teorisini matematiksel ve fiziksel kanıtlarla destekledi.
-                        </p>
+                <div class="glass-card rounded-2xl p-6 space-y-3" onclick="snd('hover')">
+                    <div class="w-10 h-10 rounded-xl bg-neon-purple/10 border border-neon-purple/20 flex items-center justify-center text-neon-purple text-lg font-bold">
+                        03
                     </div>
-                    <div class="pt-4 border-t border-white/5 text-xs text-purple-400 uppercase font-semibold tracking-wider">
-                        Helyosantrizm
-                    </div>
+                    <h3 class="text-lg font-bold font-heading text-white">Serbest Düşme Yasası</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Ağır cisimlerin hafiflerden daha hızlı düştüğü fikrini yıktı. İvmenin kütleye bağlı olmadığını kanıtladı.
+                    </p>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8 space-y-4 flex flex-col justify-between" onclick="playAudio('hover')">
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-2xl mb-6">
-                            <i class="fas fa-stopwatch"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold font-cinzel text-white">Sarkaç ve İvme Kanunları</h3>
-                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
-                            Pisa Katedrali'ndeki avizenin salınımından esinlenerek sarkaç izokronizmini ve serbest düşme ivmesinin kütleden bağımsız olduğunu ispatladı.
-                        </p>
+                <div class="glass-card rounded-2xl p-6 space-y-3" onclick="snd('hover')">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-lg font-bold">
+                        04
                     </div>
-                    <div class="pt-4 border-t border-white/5 text-xs text-emerald-400 uppercase font-semibold tracking-wider">
-                        Klasik Mekanik
-                    </div>
+                    <h3 class="text-lg font-bold font-heading text-white">Sarkaç Hareketi</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Sarkacın salınım süresinin genliğe değil sadece ipin uzunluğuna bağlı olduğunu buldu, ilk hassas saatlerin önünü açtı.
+                    </p>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8 space-y-4 flex flex-col justify-between" onclick="playAudio('hover')">
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 text-2xl mb-6">
-                            <i class="fas fa-flask"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold font-cinzel text-white">Deneysel Bilimsel Yöntem</h3>
-                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
-                            Sadece felsefi akıl yürütmeyi reddedip girdiği her iddiayı hipotez, matematik ve ölçülebilir deneylerle kanıtlama metodolojisini bilime kazandırdı.
-                        </p>
+                <div class="glass-card rounded-2xl p-6 space-y-3" onclick="snd('hover')">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 text-lg font-bold">
+                        05
                     </div>
-                    <div class="pt-4 border-t border-white/5 text-xs text-rose-400 uppercase font-semibold tracking-wider">
-                        Bilim Metodolojisi
-                    </div>
+                    <h3 class="text-lg font-bold font-heading text-white">Güneş Merkezli Sistem</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Kopernik'in teorisini teleskop gözlemleriyle destekleyerek evrenin merkezinde Dünya değil Güneş olduğunu savundu.
+                    </p>
                 </div>
 
-                <div class="glass-card rounded-2xl p-8 space-y-4 flex flex-col justify-between" onclick="playAudio('hover')">
-                    <div>
-                        <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 text-2xl mb-6">
-                            <i class="fas fa-compass"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold font-cinzel text-white">Termoskop & Askeri Pusula</h3>
-                        <p class="text-gray-400 text-sm mt-3 leading-relaxed">
-                            Sıcaklık değişimlerini ölçebilen ilk termometre türevi termoskobu ve topçular için hassas açı hesaplayan geometrik askeri pusulayı icat etti.
-                        </p>
+                <div class="glass-card rounded-2xl p-6 space-y-3" onclick="snd('hover')">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 text-lg font-bold">
+                        06
                     </div>
-                    <div class="pt-4 border-t border-white/5 text-xs text-blue-400 uppercase font-semibold tracking-wider">
-                        Mühendislik & İcat
-                    </div>
+                    <h3 class="text-lg font-bold font-heading text-white">Termoskop İcadı</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Sıcaklık değişimleriyle sıvı seviyesinin değiştiğini fark ederek günümüz termometrelerinin ilk halini icat etti.
+                    </p>
                 </div>
             </div>
         </section>
 
-        <section id="telescope-sim" class="py-24 px-6 md:px-12 max-w-7xl mx-auto reveal">
-            <div class="glass-panel rounded-3xl p-8 md:p-12 relative overflow-hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    <div class="lg:col-span-5 space-y-6">
-                        <span class="text-amber-400 text-sm font-semibold tracking-widest uppercase font-cinzel">İNTERAKTİF DENEYİM</span>
-                        <h2 class="text-3xl md:text-4xl font-bold font-cinzel text-white">GALİLEO'NUN TELESKOBUNU DENEYİMLE</h2>
-                        <p class="text-gray-300 text-sm leading-relaxed">
-                            1610 yılında Galileo'nun göz merceğinden baktığı ana tanıklık edin. Mercek odağını ve büyütmeyi ayarlayarak Jüpiter ve etrafındaki 4 tarihi uyduyu (Io, Europa, Ganymede, Callisto) keşfedin.
-                        </p>
+        <section id="simulators" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto reveal">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-neon-cyan font-mono text-xs uppercase tracking-widest">İnteraktif Bölüm</span>
+                <h2 class="text-3xl font-bold font-heading text-white mt-1">Fizik ve Uzay Simülatörleri</h2>
+            </div>
 
-                        <div class="space-y-4 pt-4">
-                            <div>
-                                <div class="flex justify-between text-xs font-semibold mb-2 text-gray-300">
-                                    <span>TELESKOP ODAK AYARI (BÜYÜTME)</span>
-                                    <span id="zoomVal" class="text-amber-400">1x</span>
+            <div class="space-y-12">
+                <div class="glass rounded-3xl p-6 sm:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-neon-cyan/10 text-neon-cyan font-mono text-xs">
+                                Simülatör #1
+                            </div>
+                            <h3 class="text-2xl font-bold font-heading text-white">Galileo'nun Teleskobu</h3>
+                            <p class="text-xs text-gray-300 leading-relaxed">
+                                Görüş açısını ve filreleri değiştirerek Galileo'nun teleskobuyla gördüğü gök cisimlerini inceleyin.
+                            </p>
+
+                            <div class="space-y-4 pt-2">
+                                <div>
+                                    <label class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                        <span>GÖK CİSMİ SEÇİMİ</span>
+                                    </label>
+                                    <div class="grid grid-cols-3 gap-2" id="targetBtns">
+                                        <button onclick="setTelTarget('jupiter')" class="tel-btn px-3 py-2 rounded-xl text-xs font-medium bg-neon-cyan/20 border border-neon-cyan text-white">Jüpiter</button>
+                                        <button onclick="setTelTarget('moon')" class="tel-btn px-3 py-2 rounded-xl text-xs font-medium bg-white/5 border border-white/10 text-gray-300">Ay Kraterleri</button>
+                                        <button onclick="setTelTarget('sun')" class="tel-btn px-3 py-2 rounded-xl text-xs font-medium bg-white/5 border border-white/10 text-gray-300">Güneş Lekeleri</button>
+                                    </div>
                                 </div>
-                                <input type="range" id="zoomRange" min="1" max="5" step="0.1" value="1" class="w-full h-2 bg-space-900 rounded-lg appearance-none cursor-pointer accent-amber-500">
-                            </div>
 
-                            <div class="p-4 rounded-xl bg-space-900/60 border border-white/5 text-xs text-gray-400 space-y-1">
-                                <p class="text-amber-400 font-semibold"><i class="fas fa-info-circle mr-1"></i> Bilgi:</p>
-                                <p id="moonInfo">Odaklama düğmesini kaydırarak uyduların Jüpiter etrafındaki dizilimini inceleyebilirsiniz.</p>
+                                <div>
+                                    <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                        <span>ODAKLAMA (BÜYÜTME)</span>
+                                        <span id="zoomLabel" class="text-neon-cyan">1.5x</span>
+                                    </div>
+                                    <input type="range" id="telZoom" min="1" max="4" step="0.1" value="1.5" class="w-full">
+                                </div>
+
+                                <div>
+                                    <div class="flex justify-between text-xs font-mono text-gray-300 mb-1">
+                                        <span>MERCEK FİLTRESİ</span>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-2">
+                                        <button onclick="setFilter('none')" class="px-2 py-1.5 rounded-lg text-xs bg-white/5 border border-white/10 text-gray-300 hover:text-white">Normal</button>
+                                        <button onclick="setFilter('sepia')" class="px-2 py-1.5 rounded-lg text-xs bg-white/5 border border-white/10 text-amber-300 hover:text-amber-200">Antik Cam</button>
+                                        <button onclick="setFilter('invert')" class="px-2 py-1.5 rounded-lg text-xs bg-white/5 border border-white/10 text-cyan-300 hover:text-cyan-200">Kontrast</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-7 flex justify-center">
+                            <div class="relative w-72 h-72 sm:w-80 sm:h-80 rounded-full border-4 border-amber-900/50 bg-black overflow-hidden shadow-2xl shadow-neon-cyan/10">
+                                <canvas id="telCanvas" class="w-full h-full cursor-crosshair"></canvas>
+                                <div class="absolute inset-0 rounded-full border-[10px] border-cosmic-950/80 pointer-events-none"></div>
+                                <div class="absolute top-1/2 left-0 w-full h-[1px] bg-neon-cyan/20 pointer-events-none"></div>
+                                <div class="absolute top-0 left-1/2 w-[1px] h-full bg-neon-cyan/20 pointer-events-none"></div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="lg:col-span-7 flex justify-center">
-                        <div class="relative w-80 h-80 sm:w-96 sm:h-96 rounded-full border-8 border-amber-900/40 bg-black overflow-hidden shadow-2xl shadow-amber-500/10 flex items-center justify-center cursor-crosshair group">
-                            <canvas id="telescopeCanvas" class="w-full h-full rounded-full"></canvas>
+                <div class="glass rounded-3xl p-6 sm:p-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-neon-amber/10 text-neon-amber font-mono text-xs">
+                                Simülatör #2
+                            </div>
+                            <h3 class="text-2xl font-bold font-heading text-white">Serbest Düşme Deneyi</h3>
+                            <p class="text-xs text-gray-300 leading-relaxed">
+                                Galileo'nun Pisa Kulesi'nden yaptığı rivayet edilen meşhur ağırlık düşürme deneyi. Vakumlu ortamda havanın sürtünmesi olmadığı için kütlesi farklı cisimler aynı anda yere düşer.
+                            </p>
 
-                            <div class="absolute inset-0 rounded-full border-[12px] border-space-900/90 pointer-events-none"></div>
-                            <div class="absolute top-1/2 left-0 w-full h-[1px] bg-amber-500/20 pointer-events-none"></div>
-                            <div class="absolute top-0 left-1/2 w-[1px] h-full bg-amber-500/20 pointer-events-none"></div>
+                            <div class="space-y-4 pt-2">
+                                <div class="flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10">
+                                    <span class="text-xs font-mono text-gray-300">Hava Sürtünmesi</span>
+                                    <button id="airToggle" onclick="toggleAir()" class="px-3 py-1 rounded-lg text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30">Açık (Normal)</button>
+                                </div>
+
+                                <button onclick="dropBalls()" class="w-full py-3 rounded-xl bg-neon-amber hover:bg-amber-400 text-black font-semibold text-sm transition-all shadow-lg shadow-neon-amber/20 flex items-center justify-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                                    Cisimleri Bırak
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-7 flex justify-center">
+                            <div class="relative w-full max-w-md h-72 bg-cosmic-950 rounded-2xl border border-white/10 overflow-hidden">
+                                <canvas id="dropCanvas" class="w-full h-full"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="gallery" class="py-24 px-6 md:px-12 max-w-7xl mx-auto reveal">
-            <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
-                <span class="text-amber-400 text-sm font-semibold tracking-widest uppercase font-cinzel">GALERİ</span>
-                <h2 class="text-3xl md:text-5xl font-bold font-cinzel text-white">GÖRSELLER VE TARİHİ İZLER</h2>
-                <p class="text-gray-400">Galileo'nun yaşamına, kullandığı aletlere ve gözlemlediği gök cisimlerine bakış.</p>
+        <section id="gallery" class="py-20 px-4 sm:px-6 max-w-6xl mx-auto reveal">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-neon-amber font-mono text-xs uppercase tracking-widest">Görsel Materyaller</span>
+                <h2 class="text-3xl font-bold font-heading text-white mt-1">Galileo ve Tarihi İzler</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="glass-card rounded-2xl overflow-hidden group">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop" 
-                             alt="Jüpiter ve Uyduları" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0B1120/F59E0B?text=Jupiter'">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?q=80&w=800&auto=format&fit=crop" alt="Jüpiter Görseli" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="p-4">
-                        <h4 class="font-cinzel font-bold text-white text-base">Jüpiter ve Galilei Uyduları</h4>
-                        <p class="text-xs text-gray-400 mt-1">1610 yılındaki keşfin simülasyonu</p>
+                        <h4 class="font-heading font-bold text-white text-sm">Jüpiter ve Uyduları</h4>
+                        <p class="text-xs text-gray-400 mt-1">Galileo'nun 1610 yılında keşfettiği 4 büyük gaz uydusu.</p>
                     </div>
                 </div>
 
                 <div class="glass-card rounded-2xl overflow-hidden group">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=800&auto=format&fit=crop" 
-                             alt="Antik Teleskop" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0B1120/F59E0B?text=Teleskop'">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop" alt="Pisa Kulesi" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="p-4">
-                        <h4 class="font-cinzel font-bold text-white text-base">Tarihi Astronomik Teleskop</h4>
-                        <p class="text-xs text-gray-400 mt-1">17. yüzyıl optik mercek teknolojisi</p>
+                        <h4 class="font-heading font-bold text-white text-sm">Pisa Eğik Kulesi</h4>
+                        <p class="text-xs text-gray-400 mt-1">Yerçekimi ve serbest düşme deneylerinin simge mekanı.</p>
                     </div>
                 </div>
 
                 <div class="glass-card rounded-2xl overflow-hidden group">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop" 
-                             alt="Pisa Kulesi" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0B1120/F59E0B?text=Pisa'">
+                    <div class="h-52 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=800&auto=format&fit=crop" alt="Tarihi Teleskop" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                     </div>
                     <div class="p-4">
-                        <h4 class="font-cinzel font-bold text-white text-base">Pisa Kulesi & Yerçekimi</h4>
-                        <p class="text-xs text-gray-400 mt-1">Düşme yasalarını test ettiği tarihi mekan</p>
-                    </div>
-                </div>
-
-                <div class="glass-card rounded-2xl overflow-hidden group">
-                    <div class="h-64 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1502134249126-9f3755a50d78?q=80&w=800&auto=format&fit=crop" 
-                             alt="Gece Gökyüzü ve Samanyolu" 
-                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                             onerror="this.src='https://placehold.co/800x600/0B1120/F59E0B?text=Uzay'">
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-cinzel font-bold text-white text-base">Sonsuz Evren Tasavvuru</h4>
-                        <p class="text-xs text-gray-400 mt-1">Gökbiliminde modern dönemin başlangıcı</p>
+                        <h4 class="font-heading font-bold text-white text-sm">El Yapımı Teleskop</h4>
+                        <p class="text-xs text-gray-400 mt-1">Ahşap ve dış merceklerle tasarladığı ilk rasathane teleskobu.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="py-16 px-6 md:px-12 border-t border-white/10 bg-space-900/80">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="space-y-2 text-center md:text-left">
-                    <h3 class="font-cinzel text-xl font-bold text-white">Projeyi Hazırlayan</h3>
-                    <p class="text-sm text-gray-400">9. Sınıf Fizik Bilim İnsanı Araştırma Ödevi</p>
+        <section id="contact" class="py-16 px-4 sm:px-6 border-t border-white/10 bg-cosmic-950">
+            <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="space-y-1 text-center md:text-left">
+                    <h3 class="font-heading text-lg font-bold text-white">Hazırlayan: 9. Sınıf Öğrencisi</h3>
+                    <p class="text-xs text-gray-400">Fizik dersi bilim insanı araştırma ödevi teslim projesi.</p>
                 </div>
 
-                <div class="flex items-center gap-6">
-                    <a href="mailto:wxrofficalbrom1@gmail.com" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-amber-400 hover:border-amber-500/50 transition-all" title="E-Posta Gönder" onclick="playAudio('click')">
-                        <i class="fas fa-envelope text-lg"></i>
+                <div class="flex items-center gap-4">
+                    <a href="mailto:wxrofficalbrom1@gmail.com" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-neon-cyan hover:border-neon-cyan/40 transition-all" title="E-Posta" onclick="snd('click')">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                     </a>
-                    <a href="https://www.instagram.com/wxroffical1/" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-amber-400 hover:border-amber-500/50 transition-all" title="Instagram" onclick="playAudio('click')">
-                        <i class="fab fa-instagram text-lg"></i>
+
+                    <a href="https://www.instagram.com/wxroffical1/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-neon-amber hover:border-neon-amber/40 transition-all" title="Instagram" onclick="snd('click')">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     </a>
-                    <a href="https://github.com/TByunus" target="_blank" rel="noopener noreferrer" class="w-12 h-12 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-amber-400 hover:border-amber-500/50 transition-all" title="GitHub" onclick="playAudio('click')">
-                        <i class="fab fa-github text-lg"></i>
+
+                    <a href="https://github.com/TByunus" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-white hover:border-white/40 transition-all" title="GitHub" onclick="snd('click')">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
                     </a>
                 </div>
             </div>
-
-            <div class="max-w-7xl mx-auto mt-12 pt-6 border-t border-white/5 text-center text-xs text-gray-500 font-mono">
-                © 2026 Yunus — Tüm Hakları Saklıdır. Galileo Galilei Fizik Sunum Projesi.
+            <div class="max-w-6xl mx-auto mt-8 pt-4 border-t border-white/5 text-center text-[11px] text-gray-500 font-mono">
+                © 2026 Yunus — 9/A Sınıfı Fizik Sunum Sayfası.
             </div>
         </section>
+
     </main>
 
     <script>
-        let audioEnabled = false;
-        let audioCtx = null;
+        let actx = null;
+        let soundOn = false;
 
         function initAudio() {
-            if (!audioCtx) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (!actx) {
+                actx = new (window.AudioContext || window.webkitAudioContext)();
             }
         }
 
         function toggleAudio() {
             initAudio();
-            audioEnabled = !audioEnabled;
-            const soundIcon = document.getElementById('soundIcon');
-            if (audioEnabled) {
-                soundIcon.className = 'fas fa-volume-up text-amber-400';
-                playAudio('click');
-            } else {
-                soundIcon.className = 'fas fa-volume-mute text-gray-500';
-            }
+            soundOn = !soundOn;
+            document.getElementById('audioIconOff').classList.toggle('hidden', soundOn);
+            document.getElementById('audioIconOn').classList.toggle('hidden', !soundOn);
+            if (soundOn) snd('click');
         }
 
-        function playAudio(type) {
-            if (!audioEnabled || !audioCtx) return;
-
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
+        function snd(type) {
+            if (!soundOn || !actx) return;
+            const now = actx.currentTime;
+            const osc = actx.createOscillator();
+            const gain = actx.createGain();
             osc.connect(gain);
-            gain.connect(audioCtx.destination);
-
-            const now = audioCtx.currentTime;
+            gain.connect(actx.destination);
 
             if (type === 'click') {
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(800, now);
-                osc.frequency.exponentialRampToValueAtTime(400, now + 0.08);
-                gain.gain.setValueAtTime(0.15, now);
+                osc.frequency.setValueAtTime(520, now);
+                osc.frequency.exponentialRampToValueAtTime(220, now + 0.06);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.06);
+                osc.start(now);
+                osc.stop(now + 0.06);
+            } else if (type === 'hover') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(320, now);
+                osc.frequency.linearRampToValueAtTime(380, now + 0.04);
+                gain.gain.setValueAtTime(0.03, now);
+                gain.gain.linearRampToValueAtTime(0.001, now + 0.04);
+                osc.start(now);
+                osc.stop(now + 0.04);
+            } else if (type === 'nav') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, now);
+                osc.frequency.exponentialRampToValueAtTime(880, now + 0.08);
+                gain.gain.setValueAtTime(0.08, now);
                 gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
                 osc.start(now);
                 osc.stop(now + 0.08);
-            } else if (type === 'hover') {
-                osc.type = 'triangle';
-                osc.frequency.setValueAtTime(300, now);
-                osc.frequency.exponentialRampToValueAtTime(450, now + 0.05);
-                gain.gain.setValueAtTime(0.05, now);
-                gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
+            } else if (type === 'drop') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(60, now + 0.2);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
                 osc.start(now);
-                osc.stop(now + 0.05);
+                osc.stop(now + 0.2);
             }
         }
 
-        const canvas = document.getElementById('starfield');
-        const ctx = canvas.getContext('2d');
-        let stars = [];
+        const bgCanvas = document.getElementById('starfield');
+        const bgCtx = bgCanvas.getContext('2d');
+        let bgStars = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initStars();
-        }
-
-        function initStars() {
-            stars = [];
-            const count = Math.floor((canvas.width * canvas.height) / 3000);
+        function resizeBg() {
+            bgCanvas.width = window.innerWidth;
+            bgCanvas.height = window.innerHeight;
+            bgStars = [];
+            const count = Math.floor((bgCanvas.width * bgCanvas.height) / 3500);
             for (let i = 0; i < count; i++) {
-                stars.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    size: Math.random() * 1.5 + 0.5,
+                bgStars.push({
+                    x: Math.random() * bgCanvas.width,
+                    y: Math.random() * bgCanvas.height,
+                    size: Math.random() * 1.2 + 0.3,
                     alpha: Math.random(),
-                    speed: Math.random() * 0.02 + 0.005
+                    speed: Math.random() * 0.015 + 0.005
                 });
             }
         }
 
-        function animateStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(star => {
-                star.alpha += star.speed;
-                if (star.alpha > 1 || star.alpha < 0) star.speed = -star.speed;
-                ctx.fillStyle = `rgba(255, 255, 255, ${Math.abs(star.alpha)})`;
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
+        function drawBgStars() {
+            bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+            bgStars.forEach(s => {
+                s.alpha += s.speed;
+                if (s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+                bgCtx.fillStyle = `rgba(255, 255, 255, ${Math.abs(s.alpha)})`;
+                bgCtx.beginPath();
+                bgCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                bgCtx.fill();
             });
-            requestAnimationFrame(animateStars);
+            requestAnimationFrame(drawBgStars);
         }
 
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-        animateStars();
-
-        const observerOptions = {
-            threshold: 0.15
-        };
+        window.addEventListener('resize', resizeBg);
+        resizeBg();
+        drawBgStars();
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        const telCanvas = document.getElementById('telescopeCanvas');
+        const telCanvas = document.getElementById('telCanvas');
         const telCtx = telCanvas.getContext('2d');
-        const zoomRange = document.getElementById('zoomRange');
-        const zoomVal = document.getElementById('zoomVal');
+        let telTarget = 'jupiter';
+        let filterMode = 'none';
+        const telZoomInput = document.getElementById('telZoom');
+        const zoomLabel = document.getElementById('zoomLabel');
 
-        function drawTelescopeView() {
-            const width = telCanvas.width = telCanvas.clientWidth;
-            const height = telCanvas.height = telCanvas.clientHeight;
-            const zoom = parseFloat(zoomRange.value);
+        telZoomInput.addEventListener('input', () => {
+            zoomLabel.textContent = parseFloat(telZoomInput.value).toFixed(1) + 'x';
+            snd('hover');
+            drawTelescope();
+        });
 
-            zoomVal.textContent = zoom.toFixed(1) + 'x';
+        function setTelTarget(target) {
+            telTarget = target;
+            snd('click');
+            drawTelescope();
+        }
 
-            telCtx.fillStyle = '#02040A';
-            telCtx.fillRect(0, 0, width, height);
+        function setFilter(filter) {
+            filterMode = filter;
+            snd('click');
+            drawTelescope();
+        }
 
-            for (let i = 0; i < 40; i++) {
-                const sx = (Math.sin(i * 99) * 0.5 + 0.5) * width;
-                const sy = (Math.cos(i * 33) * 0.5 + 0.5) * height;
-                telCtx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        function drawTelescope() {
+            const w = telCanvas.width = telCanvas.clientWidth;
+            const h = telCanvas.height = telCanvas.clientHeight;
+            const zoom = parseFloat(telZoomInput.value);
+            const cx = w / 2;
+            const cy = h / 2;
+
+            telCtx.fillStyle = '#02040a';
+            telCtx.fillRect(0, 0, w, h);
+
+            for (let i = 0; i < 30; i++) {
+                const sx = (Math.sin(i * 77) * 0.5 + 0.5) * w;
+                const sy = (Math.cos(i * 44) * 0.5 + 0.5) * h;
+                telCtx.fillStyle = 'rgba(255,255,255,0.3)';
                 telCtx.fillRect(sx, sy, 1, 1);
             }
 
-            const centerX = width / 2;
-            const centerY = height / 2;
-            const jupiterRadius = 24 * zoom;
+            if (telTarget === 'jupiter') {
+                const r = 26 * zoom;
+                const g = telCtx.createRadialGradient(cx, cy, r * 0.2, cx, cy, r);
+                g.addColorStop(0, '#fef08a');
+                g.addColorStop(0.6, '#d97706');
+                g.addColorStop(1, '#78350f');
 
-            const grad = telCtx.createRadialGradient(centerX, centerY, jupiterRadius * 0.2, centerX, centerY, jupiterRadius);
-            grad.addColorStop(0, '#FDE68A');
-            grad.addColorStop(0.5, '#D97706');
-            grad.addColorStop(1, '#78350F');
+                telCtx.beginPath();
+                telCtx.arc(cx, cy, r, 0, Math.PI * 2);
+                telCtx.fillStyle = g;
+                telCtx.fill();
 
-            telCtx.beginPath();
-            telCtx.arc(centerX, centerY, jupiterRadius, 0, Math.PI * 2);
-            telCtx.fillStyle = grad;
-            telCtx.fill();
+                telCtx.fillStyle = 'rgba(120,53,15,0.4)';
+                telCtx.fillRect(cx - r, cy - r * 0.2, r * 2, r * 0.15);
+                telCtx.fillRect(cx - r, cy + r * 0.25, r * 2, r * 0.12);
 
-            telCtx.fillStyle = 'rgba(120, 53, 15, 0.5)';
-            telCtx.fillRect(centerX - jupiterRadius, centerY - (jupiterRadius * 0.3), jupiterRadius * 2, jupiterRadius * 0.2);
-            telCtx.fillRect(centerX - jupiterRadius, centerY + (jupiterRadius * 0.2), jupiterRadius * 2, jupiterRadius * 0.15);
+                const moons = [
+                    { name: 'Io', d: 50 * zoom, c: '#fef08a' },
+                    { name: 'Europa', d: 80 * zoom, c: '#e0f2fe' },
+                    { name: 'Ganymede', d: 115 * zoom, c: '#cbd5e1' },
+                    { name: 'Callisto', d: 145 * zoom, c: '#94a3b8' }
+                ];
 
-            const moons = [
-                { name: 'Io', distance: 55 * zoom, color: '#FCD34D' },
-                { name: 'Europa', distance: 85 * zoom, color: '#E0F2FE' },
-                { name: 'Ganymede', distance: 125 * zoom, color: '#9CA3AF' },
-                { name: 'Callisto', distance: 160 * zoom, color: '#6B7280' }
-            ];
+                moons.forEach((m, idx) => {
+                    const angle = idx * 1.4 + 0.8;
+                    const mx = cx + Math.cos(angle) * m.d;
+                    const my = cy + Math.sin(angle) * (m.d * 0.15);
 
-            moons.forEach((moon, idx) => {
-                const angle = idx * 1.2 + 0.5;
-                const mx = centerX + Math.cos(angle) * moon.distance;
-                const my = centerY + Math.sin(angle) * (moon.distance * 0.2);
-
-                if (mx > 10 && mx < width - 10 && my > 10 && my < height - 10) {
                     telCtx.beginPath();
-                    telCtx.arc(mx, my, 3 * (zoom * 0.6), 0, Math.PI * 2);
-                    telCtx.fillStyle = moon.color;
+                    telCtx.arc(mx, my, 2.5 * (zoom * 0.5), 0, Math.PI * 2);
+                    telCtx.fillStyle = m.c;
                     telCtx.fill();
 
-                    if (zoom > 2) {
-                        telCtx.fillStyle = '#9CA3AF';
-                        telCtx.font = '10px sans-serif';
-                        telCtx.fillText(moon.name, mx + 6, my + 3);
+                    if (zoom >= 1.5) {
+                        telCtx.fillStyle = '#94a3b8';
+                        telCtx.font = '9px monospace';
+                        telCtx.fillText(m.name, mx + 5, my + 3);
                     }
-                }
-            });
+                });
+            } else if (telTarget === 'moon') {
+                const r = 70 * zoom;
+                telCtx.beginPath();
+                telCtx.arc(cx, cy, r, 0, Math.PI * 2);
+                telCtx.fillStyle = '#cbd5e1';
+                telCtx.fill();
+
+                const craters = [
+                    { x: cx - r*0.3, y: cy - r*0.2, cr: r*0.18 },
+                    { x: cx + r*0.2, y: cy + r*0.3, cr: r*0.22 },
+                    { x: cx + r*0.4, y: cy - r*0.1, cr: r*0.12 },
+                    { x: cx - r*0.1, y: cy + r*0.4, cr: r*0.15 }
+                ];
+
+                craters.forEach(c => {
+                    telCtx.beginPath();
+                    telCtx.arc(c.x, c.y, c.cr, 0, Math.PI * 2);
+                    telCtx.fillStyle = '#94a3b8';
+                    telCtx.fill();
+                });
+            } else if (telTarget === 'sun') {
+                const r = 75 * zoom;
+                const g = telCtx.createRadialGradient(cx, cy, r * 0.1, cx, cy, r);
+                g.addColorStop(0, '#fef08a');
+                g.addColorStop(0.8, '#f59e0b');
+                g.addColorStop(1, '#b45309');
+
+                telCtx.beginPath();
+                telCtx.arc(cx, cy, r, 0, Math.PI * 2);
+                telCtx.fillStyle = g;
+                telCtx.fill();
+
+                const spots = [
+                    { x: cx - r*0.2, y: cy - r*0.1, sr: 3 * zoom },
+                    { x: cx + r*0.1, y: cy + r*0.2, sr: 4 * zoom },
+                    { x: cx + r*0.25, y: cy + r*0.15, sr: 2 * zoom }
+                ];
+
+                spots.forEach(s => {
+                    telCtx.beginPath();
+                    telCtx.arc(s.x, s.y, s.sr, 0, Math.PI * 2);
+                    telCtx.fillStyle = '#451a03';
+                    telCtx.fill();
+                });
+            }
+
+            if (filterMode === 'sepia') {
+                telCtx.fillStyle = 'rgba(217, 119, 6, 0.25)';
+                telCtx.fillRect(0, 0, w, h);
+            } else if (filterMode === 'invert') {
+                telCtx.fillStyle = 'rgba(6, 182, 212, 0.2)';
+                telCtx.fillRect(0, 0, w, h);
+            }
         }
 
-        zoomRange.addEventListener('input', () => {
-            playAudio('hover');
-            drawTelescopeView();
-        });
+        window.addEventListener('load', drawTelescope);
+        window.addEventListener('resize', drawTelescope);
 
-        window.addEventListener('load', drawTelescopeView);
-        window.addEventListener('resize', drawTelescopeView);
+        const dropCanvas = document.getElementById('dropCanvas');
+        const dropCtx = dropCanvas.getContext('2d');
+        let airResistance = true;
+        let isDropping = false;
+        let ball1 = { y: 20, vy: 0, mass: 10, size: 14, color: '#00f2fe', label: '10 kg' };
+        let ball2 = { y: 20, vy: 0, mass: 1, size: 8, color: '#ffb703', label: '1 kg' };
+
+        function toggleAir() {
+            airResistance = !airResistance;
+            const btn = document.getElementById('airToggle');
+            if (airResistance) {
+                btn.textContent = 'Açık (Normal)';
+                btn.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/30';
+            } else {
+                btn.textContent = 'Kapalı (Vakum)';
+                btn.className = 'px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+            }
+            snd('click');
+            resetDrop();
+        }
+
+        function resetDrop() {
+            ball1.y = 30;
+            ball1.vy = 0;
+            ball2.y = 30;
+            ball2.vy = 0;
+            isDropping = false;
+            drawDrop();
+        }
+
+        function dropBalls() {
+            if (isDropping) return;
+            resetDrop();
+            isDropping = true;
+            snd('click');
+            animateDrop();
+        }
+
+        function animateDrop() {
+            if (!isDropping) return;
+
+            const w = dropCanvas.width = dropCanvas.clientWidth;
+            const h = dropCanvas.height = dropCanvas.clientHeight;
+            const floorY = h - 30;
+
+            const g = 0.25;
+            const k1 = airResistance ? 0.015 : 0;
+            const k2 = airResistance ? 0.04 : 0;
+
+            if (ball1.y < floorY - ball1.size) {
+                ball1.vy += g - (k1 * ball1.vy);
+                ball1.y += ball1.vy;
+            } else {
+                ball1.y = floorY - ball1.size;
+            }
+
+            if (ball2.y < floorY - ball2.size) {
+                ball2.vy += g - (k2 * ball2.vy);
+                ball2.y += ball2.vy;
+            } else {
+                ball2.y = floorY - ball2.size;
+            }
+
+            drawDrop();
+
+            if (ball1.y >= floorY - ball1.size && ball2.y >= floorY - ball2.size) {
+                isDropping = false;
+                snd('drop');
+            } else {
+                requestAnimationFrame(animateDrop);
+            }
+        }
+
+        function drawDrop() {
+            const w = dropCanvas.width = dropCanvas.clientWidth;
+            const h = dropCanvas.height = dropCanvas.clientHeight;
+            const floorY = h - 30;
+
+            dropCtx.fillStyle = '#02040a';
+            dropCtx.fillRect(0, 0, w, h);
+
+            dropCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+            dropCtx.lineWidth = 1;
+            dropCtx.beginPath();
+            dropCtx.moveTo(0, floorY);
+            dropCtx.lineTo(w, floorY);
+            dropCtx.stroke();
+
+            dropCtx.fillStyle = '#1e293b';
+            dropCtx.fillRect(0, floorY, w, 30);
+
+            const x1 = w * 0.35;
+            dropCtx.beginPath();
+            dropCtx.arc(x1, ball1.y, ball1.size, 0, Math.PI * 2);
+            dropCtx.fillStyle = ball1.color;
+            dropCtx.fill();
+            dropCtx.fillStyle = '#ffffff';
+            dropCtx.font = '10px monospace';
+            dropCtx.fillText(ball1.label, x1 - 14, ball1.y - 18);
+
+            const x2 = w * 0.65;
+            dropCtx.beginPath();
+            dropCtx.arc(x2, ball2.y, ball2.size, 0, Math.PI * 2);
+            dropCtx.fillStyle = ball2.color;
+            dropCtx.fill();
+            dropCtx.fillStyle = '#ffffff';
+            dropCtx.font = '10px monospace';
+            dropCtx.fillText(ball2.label, x2 - 12, ball2.y - 14);
+        }
+
+        window.addEventListener('load', resetDrop);
+        window.addEventListener('resize', resetDrop);
     </script>
 </body>
 </html>
